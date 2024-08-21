@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastCare - Patient Scheduler</title>
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Include jQuery UI JS -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Include Bootstrap CSS (if needed) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Font Awesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Placeholder for header -->
+    <div id="header"></div>
+    
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Practice</h4>
+                <input type="text" class="form-control" placeholder="PGS" disabled>
+            </div>
+            <div class="col-md-4">
+                <h4>Provider</h4>
+                <input type="text" class="form-control" placeholder="Harry, Potter" disabled>
+            </div>
+            <div class="col-md-4">
+                <h4>Patient Information</h4>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="text" id="phoneNumber" class="form-control" value="111-111-1111">
+                </div>
+                <div class="form-group">
+                    <label for="patientDOB">Patient DOB:</label>
+                    <div class="input-group">
+                        <input type="text" id="patientDOB" class="form-control" value="09-12-1995">
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="patientName">Patient Name:</label>
+                    <div class="input-group">
+                        <input type="text" id="patientName" class="form-control" placeholder="Enter Patient Name">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="searchName">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-8" id="appointmentSection">
+                <h4>Select Appointment Date</h4>
+                <div class="form-group">
+                    <input type="text" id="datepicker" class="form-control" placeholder="Select Date">
+                </div>
+                <h4>Available Appointment Slots</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="appointmentTable">
+                        <thead>
+                            <tr>
+                                <th>Mon</th>
+                                <th>Tues</th>
+                                <th>Wed</th>
+                                <th>Thurs</th>
+                                <th>Fri</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Content will be filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4" id="patientSection">
+               
+              
+                <div class="form-group mt-3">
+                    <h4>Categories:</h4>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="generalCheckup">
+                        <label class="form-check-label" for="generalCheckup">General Health Checkup</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="preventiveCare">
+                        <label class="form-check-label" for="preventiveCare">Preventive Care</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="diabetesScreening">
+                        <label class="form-check-label" for="diabetesScreening">Diabetes Screening</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="cardiacCheckup">
+                        <label class="form-check-label" for="cardiacCheckup">Cardiac Checkup</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="pregnancyCheckup">
+                        <label class="form-check-label" for="pregnancyCheckup">Pregnancy Checkup</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="routineLabTests">
+                        <label class="form-check-label" for="routineLabTests">Routine Lab Tests</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Enter Notes Below:</label>
+                    <textarea id="notes" class="form-control" rows="5"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-4">
+            <div class="buttons text-center mb-3">
+                <button class="btn btn-warning" id="skipButton">Skip</button>
+                <button class="btn btn-primary" id="bookAppointment">Book Appointment</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Placeholder for footer -->
+    <div id="footer"></div>
+
+    <!-- Include loadComponents.js -->
+    <script src="loadComponents.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

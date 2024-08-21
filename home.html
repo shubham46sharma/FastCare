@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastCare - Home</title>
+    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .table th, .table td {
+            text-align: center;
+        }
+        .table tbody tr {
+            cursor: pointer; /* Change cursor to pointer to indicate clickable rows */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Welcome to FastCare</h2>
+        <input type="text" id="searchBar" class="form-control mb-4" placeholder="Search for patients...">
+        
+        <table class="table table-bordered" id="patientTable">
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>Last Visit</th>
+                    <th>Main Condition</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample Data Rows -->
+                <tr data-toggle="modal" data-target="#patientModal" data-id="1">
+                    <td>P0001</td>
+                    <td>John Doe</td>
+                    <td>01-15-1980</td>
+                    <td>08-20-2024</td>
+                    <td>Diabetes</td>
+                </tr>
+                <tr data-toggle="modal" data-target="#patientModal" data-id="2">
+                    <td>P0002</td>
+                    <td>Jane Smith</td>
+                    <td>05-22-1990</td>
+                    <td>07-18-2024</td>
+                    <td>Hypertension</td>
+                </tr>
+                <tr data-toggle="modal" data-target="#patientModal" data-id="3">
+                    <td>P0003</td>
+                    <td>Emily Johnson</td>
+                    <td>03-10-1985</td>
+                    <td>06-25-2024</td>
+                    <td>Asthma</td>
+                </tr>
+                <tr data-toggle="modal" data-target="#patientModal" data-id="4">
+                    <td>P0004</td>
+                    <td>Michael Brown</td>
+                    <td>07-30-1978</td>
+                    <td>05-15-2024</td>
+                    <td>Chronic Bronchitis</td>
+                </tr>
+                <tr data-toggle="modal" data-target="#patientModal" data-id="5">
+                    <td>P0005</td>
+                    <td>Olivia Davis</td>
+                    <td>10-05-1992</td>
+                    <td>04-12-2024</td>
+                    <td>Gastritis</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Patient Detail Dialog -->
+    <div class="modal fade" id="patientModal" tabindex="-1" role="dialog" aria-labelledby="patientModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="patientModalLabel">Patient Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="nav nav-tabs" id="myTab" role="tablist">
+                        <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Patient Info</a>
+                        <a class="nav-item nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">Visit History</a>
+                        <a class="nav-item nav-link" id="medications-tab" data-toggle="tab" href="#medications" role="tab" aria-controls="medications" aria-selected="false">Medications</a>
+                        <a class="nav-item nav-link" id="conditions-tab" data-toggle="tab" href="#conditions" role="tab" aria-controls="conditions" aria-selected="false">Severe Conditions</a>
+                    </div>
+                    <div class="tab-content mt-3" id="myTabContent">
+                        <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                            <!-- Patient Info Content -->
+                        </div>
+                        <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                            <!-- Visit History Content -->
+                        </div>
+                        <div class="tab-pane fade" id="medications" role="tabpanel" aria-labelledby="medications-tab">
+                            <!-- Medications Content -->
+                        </div>
+                        <div class="tab-pane fade" id="conditions" role="tabpanel" aria-labelledby="conditions-tab">
+                            <!-- Severe Conditions Content -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include JavaScript files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Sample data for the modal
+            const patientData = {
+                1: {
+                    info: "Patient: John Doe<br>DOB: 01-15-1980<br>Contact: 111-111-1111",
+                    history: "Visit Date: 08-20-2024<br>Notes: Follow-up for diabetes management.",
+                    medications: "Metformin, Lisinopril",
+                    conditions: "Diabetes"
+                },
+                2: {
+                    info: "Patient: Jane Smith<br>DOB: 05-22-1990<br>Contact: 222-222-2222",
+                    history: "Visit Date: 07-18-2024<br>Notes: Check-up for hypertension.",
+                    medications: "Amlodipine, Hydrochlorothiazide",
+                    conditions: "Hypertension"
+                },
+                3: {
+                    info: "Patient: Emily Johnson<br>DOB: 03-10-1985<br>Contact: 333-333-3333",
+                    history: "Visit Date: 06-25-2024<br>Notes: Asthma control review.",
+                    medications: "Albuterol, Fluticasone",
+                    conditions: "Asthma"
+                },
+                4: {
+                    info: "Patient: Michael Brown<br>DOB: 07-30-1978<br>Contact: 444-444-4444",
+                    history: "Visit Date: 05-15-2024<br>Notes: Treatment for chronic bronchitis.",
+                    medications: "Bronchodilators",
+                    conditions: "Chronic Bronchitis"
+                },
+                5: {
+                    info: "Patient: Olivia Davis<br>DOB: 10-05-1992<br>Contact: 555-555-5555",
+                    history: "Visit Date: 04-12-2024<br>Notes: Gastritis management.",
+                    medications: "Omeprazole",
+                    conditions: "Gastritis"
+                }
+            };
+
+            $('#patientTable tbody tr').on('click', function() {
+                const patientId = $(this).data('id');
+                const data = patientData[patientId];
+
+                $('#info').html(data.info);
+                $('#history').html(data.history);
+                $('#medications').html(data.medications);
+                $('#conditions').html(data.conditions);
+            });
+        });
+    </script>
+</body>
+</html>

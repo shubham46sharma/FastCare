@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral List</title>
+    <link href="styles.css" rel="stylesheet">
+
+</head>
+<body>
+    <div id="header"></div>
+    <div class="container mt-5">
+        <h2>Patient Referrals</h2>
+
+        <!-- Referral Form -->
+        <div class="mt-4">
+            <h4>Refer a Patient</h4>
+            <form id="referralForm">
+                <div class="form-group">
+                    <label for="patientSelect">Select Patient:</label>
+                    <select class="form-control" id="patientSelect">
+                        <option value="1">Patient 1</option>
+                        <option value="2">Patient 2</option>
+                        <!-- Populate this dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="doctorSelect">Select Doctor to Refer:</label>
+                    <select class="form-control" id="doctorSelect">
+                        <option value="1">Doctor A</option>
+                        <option value="2">Doctor B</option>
+                        <!-- Populate this dynamically -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Referral</button>
+            </form>
+        </div>
+
+        <!-- Incoming Referrals -->
+        <div class="mt-5">
+            <h4>Incoming Referrals</h4>
+            <table class="table table-bordered" id="incomingReferralsTable">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Referred By</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Patient 1</td>
+                        <td>Doctor A</td>
+                        <td>2024-08-22</td>
+                        <td><button class="btn btn-success">Schedule</button></td>
+                    </tr>
+                    <!-- Additional rows -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Placeholder for footer -->
+    <div id="footer"></div>
+
+    <!-- Include loadComponents.js -->
+    <script src="loadComponents.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
