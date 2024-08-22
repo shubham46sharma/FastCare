@@ -95,3 +95,7 @@ h4 {
 .header .nav-link:last-child {
     margin-right: 0; /* Remove margin from the last link */
 }
+
+#loginForm{
+    margin-top: 5%;
+}
