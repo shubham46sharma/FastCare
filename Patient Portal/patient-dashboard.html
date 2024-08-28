@@ -42,35 +42,43 @@
     </div>
 
     <!-- Appointment Booking Modal -->
-    <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="appointmentModalLabel">Book an Appointment</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="bookingForm">
-                        <div class="form-group">
-                            <label for="doctorName">Doctor:</label>
-                            <input type="text" class="form-control" id="doctorName" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="appointmentDate">Date:</label>
-                            <input type="text" class="form-control" id="appointmentDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="appointmentTime">Time:</label>
-                            <input type="time" class="form-control" id="appointmentTime" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Book Appointment</button>
-                    </form>
-                </div>
+   <!-- Appointment Booking Modal -->
+<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="appointmentModalLabel">Book an Appointment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="doctorName">Doctor:</label>
+                        <input type="text" class="form-control" id="doctorName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctorName">Hospital:</label>
+                        <input type="text" class="form-control" id="hospital" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentDate">Date:</label>
+                        <input type="text" class="form-control" id="appointmentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentTime">Available Times:</label>
+                        <table class="table table-bordered" id="timeTable">
+                            <!-- Time slots will be inserted here by JavaScript -->
+                        </table>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Book Appointment</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Footer -->
     <footer class="footer">
@@ -88,62 +96,88 @@
     <script src="auth.js" defer></script>
     <script>
         $(document).ready(function () {
-            // Sample doctor data
+            // Sample doctor data with available slots
             const doctors = [
-    { id: 1, name: 'Dr. John Smith', specialization: 'Cardiologist', experience: '10 years' },
-    { id: 2, name: 'Dr. Emily Johnson', specialization: 'Dermatologist', experience: '8 years' },
-    { id: 3, name: 'Dr. Michael Brown', specialization: 'Pediatrician', experience: '12 years' },
-    { id: 4, name: 'Dr. Olivia Davis', specialization: 'Orthopedic', experience: '9 years' },
-    { id: 5, name: 'Dr. William Wilson', specialization: 'Neurologist', experience: '15 years' },
-    { id: 6, name: 'Dr. Sophia Martinez', specialization: 'Gastroenterologist', experience: '7 years' },
-    { id: 7, name: 'Dr. James Lee', specialization: 'Ophthalmologist', experience: '14 years' },
-    { id: 8, name: 'Dr. Sarah Kim', specialization: 'Endocrinologist', experience: '11 years' },
-    { id: 9, name: 'Dr. Robert Taylor', specialization: 'Oncologist', experience: '13 years' },
-    { id: 10, name: 'Dr. Jessica Lewis', specialization: 'Pulmonologist', experience: '9 years' },
-    { id: 11, name: 'Dr. Daniel Moore', specialization: 'Rheumatologist', experience: '6 years' },
-    { id: 12, name: 'Dr. Maria Garcia', specialization: 'Allergist', experience: '10 years' },
-    { id: 13, name: 'Dr. David Clark', specialization: 'Nephrologist', experience: '12 years' },
-    { id: 14, name: 'Dr. Laura Perez', specialization: 'Psychiatrist', experience: '8 years' },
-    { id: 15, name: 'Dr. Andrew Thompson', specialization: 'Urologist', experience: '10 years' }
+    { id: 1, name: 'Dr. John Smith', specialization: 'Cardiologist', experience: '10 years', hospital: 'HeartCare Hospital', slots: ['09:00 AM', '10:00 AM', '02:00 PM', '04:00 PM'] },
+    { id: 2, name: 'Dr. Emily Johnson', specialization: 'Dermatologist', experience: '8 years', hospital: 'SkinCare Clinic', slots: ['10:00 AM', '11:00 AM', '01:00 PM', '03:00 PM'] },
+    { id: 3, name: 'Dr. Michael Brown', specialization: 'Pediatrician', experience: '12 years', hospital: 'Children\'s Health Center', slots: ['08:00 AM', '09:30 AM', '01:00 PM', '03:30 PM'] },
+    { id: 4, name: 'Dr. Olivia Davis', specialization: 'Orthopedic', experience: '9 years', hospital: 'BoneCare Clinic', slots: ['11:00 AM', '12:00 PM', '02:00 PM', '04:00 PM'] },
+    { id: 5, name: 'Dr. William Wilson', specialization: 'Neurologist', experience: '15 years', hospital: 'NeuroHealth Institute', slots: ['10:00 AM', '12:00 PM', '03:00 PM', '05:00 PM'] },
+    { id: 6, name: 'Dr. Sophia Martinez', specialization: 'Gastroenterologist', experience: '7 years', hospital: 'Digestive Health Center', slots: ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM'] },
+    { id: 7, name: 'Dr. James Lee', specialization: 'Ophthalmologist', experience: '14 years', hospital: 'VisionCare Clinic', slots: ['08:30 AM', '10:00 AM', '01:00 PM', '04:00 PM'] },
+    { id: 8, name: 'Dr. Sarah Kim', specialization: 'Endocrinologist', experience: '11 years', hospital: 'Hormone Health Center', slots: ['09:00 AM', '10:30 AM', '01:00 PM', '02:30 PM'] },
+    { id: 9, name: 'Dr. Robert Taylor', specialization: 'Oncologist', experience: '13 years', hospital: 'Cancer Care Institute', slots: ['10:00 AM', '12:00 PM', '02:00 PM', '04:00 PM'] },
+    { id: 10, name: 'Dr. Jessica Lewis', specialization: 'Pulmonologist', experience: '9 years', hospital: 'Lung Health Clinic', slots: ['08:00 AM', '09:30 AM', '01:00 PM', '03:30 PM'] }
 ];
 
-const colors = ['color-1', 'color-2', 'color-3', 'color-4'];
-
-// Append doctor cards to the doctorList div
-doctors.forEach((doctor, index) => {
-    // Choose a random color class
-    const colorClass = colors[index % colors.length];
     
-    $('#doctorList').append(`
-       <div class="doctor-card ${colorClass}" data-id="${doctor.id}" data-name="${doctor.name}">
-           <i class="fas fa-user-md doctor-icon"></i>
-           <h4>${doctor.name}</h4>
-           <p>Specialization: ${doctor.specialization}</p>
-           <p>Experience: ${doctor.experience}</p>
-       </div>
-    `);
-});
-
+            const colors = ['color-1', 'color-2', 'color-3', 'color-4'];
+    
+            // Append doctor cards to the doctorList div
+            doctors.forEach((doctor, index) => {
+                const colorClass = colors[index % colors.length];
+    
+                $('#doctorList').append(`
+                    <div class="doctor-card ${colorClass}" data-id="${doctor.id}" data-name="${doctor.name}"  data-hospital="${doctor.hospital}" data-slots='${JSON.stringify(doctor.slots)}'>
+                        <i class="fas fa-user-md doctor-icon"></i>
+                        <h4>${doctor.name}</h4>
+                        <p>Specialization: ${doctor.specialization}</p>
+                        <p>Experience: ${doctor.experience}</p>
+                    </div>
+                `);
+            });
+    
             // Initialize datepicker
             $('#appointmentDate').datepicker({
                 minDate: 0 // Disable past dates
             });
-
+    
             // Show modal on doctor card click
             $('.doctor-card').on('click', function () {
                 const doctorName = $(this).data('name');
-                $('#doctorName').val(doctorName);
-                $('#appointmentModal').modal('show');
-            });
+                const slots = $(this).data('slots');
+                const hospital = $(this).data('hospital');
+                console.log('Doctor Name:', doctorName); 
+                console.log('Available Slots:', slots);
+                console.log('hospital:', hospital); 
 
+                if (slots && Array.isArray(slots)) {
+                    $('#doctorName').val(doctorName);
+                    $('#hospital').val(hospital);
+                    // Populate the time slots table
+                    $('#timeTable').empty();
+                    slots.forEach(slot => {
+                        $('#timeTable').append(`
+                            <tr>
+                                <td>
+                                    <input type="radio" name="appointmentTime" value="${slot}" required>
+                                    ${slot}
+                                </td>
+                            </tr>
+                        `);
+                    });
+    
+                    $('#appointmentModal').modal('show');
+                } else {
+                    console.error('No slots available or slots is not an array.');
+                }
+            });
+    
             // Handle form submission
             $('#bookingForm').on('submit', function (e) {
                 e.preventDefault();
-                alert('Appointment booked with ' + $('#doctorName').val() + ' on ' + $('#appointmentDate').val() + ' at ' + $('#appointmentTime').val());
-                $('#appointmentModal').modal('hide');
+                const selectedTime = $('input[name="appointmentTime"]:checked').val();
+                if (selectedTime) {
+                    alert('Appointment booked with ' + $('#doctorName').val() + ' on ' + $('#appointmentDate').val() + ' at ' + selectedTime);
+                    $('#appointmentModal').modal('hide');
+                } else {
+                    alert('Please select a time slot.');
+                }
             });
         });
     </script>
+    
+    
 </body>
 
 </html>

@@ -14,7 +14,12 @@ h2 {
 .color-4 {
     background-color: #fff3cd; /* Bootstrap light yellow (warning) */
 }
-
+.color-2 {
+    background-color: #c8ecc3; /* Bootstrap light blue (primary) */
+}
+.color-3 {
+    background-color: #ffffff; /* Bootstrap light yellow (warning) */
+}
 
 /* General styles for doctor cards */
 .doctor-card {
