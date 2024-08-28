@@ -107,10 +107,10 @@ function fillPatientInfo(firstPatient) {
     document.getElementById('patientName').value = `${firstPatient.FirstName} ${firstPatient.LastName}`;
     document.getElementById('phoneNumber').value = firstPatient.PhoneNumber;
     document.getElementById('patientDOB').value = new Date(firstPatient.DateOfBirth).toLocaleDateString();
-    document.getElementById('awv').checked = firstPatient.Flags.includes('AWV');
-    document.getElementById('dropped').checked = firstPatient.Flags.includes('DROPPED');
-    document.getElementById('idc10').checked = firstPatient.Flags.includes('IDC10');
-    document.getElementById('atrisk').checked = firstPatient.Flags.includes('ATRISK');
+    // document.getElementById('awv').checked = firstPatient.Flags.includes('AWV');
+    // document.getElementById('dropped').checked = firstPatient.Flags.includes('DROPPED');
+    // document.getElementById('idc10').checked = firstPatient.Flags.includes('IDC10');
+    // document.getElementById('atrisk').checked = firstPatient.Flags.includes('ATRISK');
 }
 
 

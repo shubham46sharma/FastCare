@@ -1,0 +1,127 @@
+body {
+    background-color: #f8f9fa; /* Light background color */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Color options for doctor cards */
+.color-1 {
+    background-color: #d1ecf1; /* Bootstrap light blue (primary) */
+}
+
+.color-2 {
+    background-color: #f8d7da; /* Bootstrap light red (danger) */
+}
+
+.color-3 {
+    background-color: #d4edda; /* Bootstrap light green (success) */
+}
+
+.color-4 {
+    background-color: #fff3cd; /* Bootstrap light yellow (warning) */
+}
+
+
+/* General styles for doctor cards */
+.doctor-card {
+    border: 1px solid #e0e0e0;
+    height: 200px;
+    width: 325px;
+    padding: 15px;
+    margin: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* Font Awesome icon styling */
+.doctor-icon {
+    font-size: 3rem; /* Adjust size as needed */
+    color: #4f80c0; /* Icon color */
+    display: block;
+    margin-bottom: 10px;
+    text-align: center; /* Center the icon */
+}
+
+/* Ensure consistent spacing */
+.doctor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Hover effect */
+.doctor-card:hover {
+    background-color: #e0e0e0; /* Light gray for hover effect */
+}
+
+
+.doctor-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333; /* Darker text color */
+}
+
+.doctor-card p {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #666; /* Lighter text color for details */
+}
+
+.modal-content {
+    border-radius: 8px;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+}
+
+#appointmentDate {
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Header styles */
+.header {
+    background-color: #007bff; /* Modern blue background */
+    color: #fff; /* White text color */
+    padding: 10px 0;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.header .nav-link {
+    color: #fff;
+    display: inline-block;
+    margin-right: 15px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.header .nav-link:hover {
+    text-decoration: underline;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header .nav-link:last-child {
+    margin-right: 0;
+}
+
+/* Doctor list section */
+#doctorList {
+    background-color: #f5f5f5; /* Light grey background for contrast */
+    padding: 20px;
+    border-radius: 8px;
+}

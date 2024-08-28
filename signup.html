@@ -5,35 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FastCare</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
 </head>
 <body>
     <div id="header"></div>
     
     <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2>Sign up</h2>
-            <form id="signupForm">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Sign up</button>
-            </form>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Sign up</h2>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign up</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<div id="footer"></div>
+    <div id="footer"></div>
 
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyf4Nz_IpQ-kZ7YZoV-U8hR45lW_oquyE",
+            authDomain: "fastcare-5c2e5.firebaseapp.com",
+            projectId: "fastcare-5c2e5",
+            storageBucket: "fastcare-5c2e5.appspot.com",
+            messagingSenderId: "581612897761",
+            appId: "1:581612897761:web:365d069d03843b66bf3ea0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Sign up logic
+        document.getElementById('signupForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed up successfully
+                    console.log('User signed up:', userCredential.user);
+                    window.location.href = 'index.html'; // Redirect after successful signup
+                })
+                .catch((error) => {
+                    console.error('Error signing up:', error);
+                });
+        });
+    </script>
+
+    <script src="loadcomponents.js"></script>
 </body>
-<script src="loadcomponents.js"></script>
-
 </html>

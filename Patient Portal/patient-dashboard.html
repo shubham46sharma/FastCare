@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastCare - Doctors</title>
+    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-right">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="patientScheduler.html" class="nav-link">Health Records</a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h1 class="header-title">FastCare</h1>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a href="patientReferral.html" class="nav-link">Previous Visits</a>
+                    <a href="./../login.html" class="nav-link">Logout</a>
+                    <button class="btn btn-primary" id="signOutButton" style="display: none;">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <h2 style="padding-bottom: 20px;">Select a Doctor to Book an Appointment</h2>
+        <div id="doctorList" class="row">
+            <!-- Doctor cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Appointment Booking Modal -->
+    <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentModalLabel">Book an Appointment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label for="doctorName">Doctor:</label>
+                            <input type="text" class="form-control" id="doctorName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentDate">Date:</label>
+                            <input type="text" class="form-control" id="appointmentDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentTime">Time:</label>
+                            <input type="time" class="form-control" id="appointmentTime" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Book Appointment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2024 FastCare. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Include JavaScript files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
+    <script src="auth.js" defer></script>
+    <script>
+        $(document).ready(function () {
+            // Sample doctor data
+            const doctors = [
+    { id: 1, name: 'Dr. John Smith', specialization: 'Cardiologist', experience: '10 years' },
+    { id: 2, name: 'Dr. Emily Johnson', specialization: 'Dermatologist', experience: '8 years' },
+    { id: 3, name: 'Dr. Michael Brown', specialization: 'Pediatrician', experience: '12 years' },
+    { id: 4, name: 'Dr. Olivia Davis', specialization: 'Orthopedic', experience: '9 years' },
+    { id: 5, name: 'Dr. William Wilson', specialization: 'Neurologist', experience: '15 years' },
+    { id: 6, name: 'Dr. Sophia Martinez', specialization: 'Gastroenterologist', experience: '7 years' },
+    { id: 7, name: 'Dr. James Lee', specialization: 'Ophthalmologist', experience: '14 years' },
+    { id: 8, name: 'Dr. Sarah Kim', specialization: 'Endocrinologist', experience: '11 years' },
+    { id: 9, name: 'Dr. Robert Taylor', specialization: 'Oncologist', experience: '13 years' },
+    { id: 10, name: 'Dr. Jessica Lewis', specialization: 'Pulmonologist', experience: '9 years' },
+    { id: 11, name: 'Dr. Daniel Moore', specialization: 'Rheumatologist', experience: '6 years' },
+    { id: 12, name: 'Dr. Maria Garcia', specialization: 'Allergist', experience: '10 years' },
+    { id: 13, name: 'Dr. David Clark', specialization: 'Nephrologist', experience: '12 years' },
+    { id: 14, name: 'Dr. Laura Perez', specialization: 'Psychiatrist', experience: '8 years' },
+    { id: 15, name: 'Dr. Andrew Thompson', specialization: 'Urologist', experience: '10 years' }
+];
+
+const colors = ['color-1', 'color-2', 'color-3', 'color-4'];
+
+// Append doctor cards to the doctorList div
+doctors.forEach((doctor, index) => {
+    // Choose a random color class
+    const colorClass = colors[index % colors.length];
+    
+    $('#doctorList').append(`
+       <div class="doctor-card ${colorClass}" data-id="${doctor.id}" data-name="${doctor.name}">
+           <i class="fas fa-user-md doctor-icon"></i>
+           <h4>${doctor.name}</h4>
+           <p>Specialization: ${doctor.specialization}</p>
+           <p>Experience: ${doctor.experience}</p>
+       </div>
+    `);
+});
+
+            // Initialize datepicker
+            $('#appointmentDate').datepicker({
+                minDate: 0 // Disable past dates
+            });
+
+            // Show modal on doctor card click
+            $('.doctor-card').on('click', function () {
+                const doctorName = $(this).data('name');
+                $('#doctorName').val(doctorName);
+                $('#appointmentModal').modal('show');
+            });
+
+            // Handle form submission
+            $('#bookingForm').on('submit', function (e) {
+                e.preventDefault();
+                alert('Appointment booked with ' + $('#doctorName').val() + ' on ' + $('#appointmentDate').val() + ' at ' + $('#appointmentTime').val());
+                $('#appointmentModal').modal('hide');
+            });
+        });
+    </script>
+</body>
+
+</html>
