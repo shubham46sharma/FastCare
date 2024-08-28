@@ -39,11 +39,11 @@ function handleSkipButtonClick() {
 
     // Replace patient section content with a dropdown
     document.getElementById('patientSection').innerHTML = `
-        <h4>CT Action</h4>
+        <h4>Action Taken</h4>
         <select class="form-control">
-            <option>Select Action</option>
-            <option>Action 1</option>
-            <option>Action 2</option>
+            <option selected disabled>Select Action</option>
+            <option>Left a message</option>
+            <option>Closed Patient</option>
         </select>
 
     `;

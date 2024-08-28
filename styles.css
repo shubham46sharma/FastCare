@@ -62,7 +62,7 @@ h4 {
 
 /* Header styles */
 .header {
-    background-color: #007bff; /* Modern blue background */
+    background-color: #4aadd4; /* Modern blue background */
     color: #fff; /* Header text color */
     padding: 10px 0; /* Padding for header */
     top: 0; /* Stick to the top */
@@ -105,5 +105,4 @@ h4 {
 }
 h2{
     text-align: center;
-    padding-top: 30px;
 }

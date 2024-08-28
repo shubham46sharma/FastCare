@@ -79,13 +79,13 @@ h2 {
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #4aadd4;
+    border-color: #4aadd4;
 }
 
 /* Header styles */
 .header {
-    background-color: #007bff; /* Modern blue background */
+    background-color: #4aadd4; /* Modern blue background */
     color: #fff; /* White text color */
     padding: 10px 0;
     top: 0;
