@@ -11,15 +11,6 @@ h2 {
 .color-1 {
     background-color: #d1ecf1; /* Bootstrap light blue (primary) */
 }
-
-.color-2 {
-    background-color: #f8d7da; /* Bootstrap light red (danger) */
-}
-
-.color-3 {
-    background-color: #d4edda; /* Bootstrap light green (success) */
-}
-
 .color-4 {
     background-color: #fff3cd; /* Bootstrap light yellow (warning) */
 }
@@ -125,3 +116,83 @@ h2 {
     padding: 20px;
     border-radius: 8px;
 }
+
+
+
+/* Visit Cards */
+.visit-card {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: calc(33.333% - 20px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.visit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.visit-card h4 {
+    margin-top: 0;
+}
+
+.visit-card p {
+    margin: 5px 0;
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-header {
+    background: #007bff;
+    color: #ffffff;
+}
+
+.modal-title {
+    margin: 0;
+}
+
+.modal-header .close {
+    color: #ffffff;
+}
+
+.modal-body {
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.modal-body h5 {
+    margin-top: 0;
+}
+
+.modal-body ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.modal-body li {
+    margin-bottom: 10px;
+}
+
+.modal-footer {
+    border-top: none;
+    padding: 15px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+

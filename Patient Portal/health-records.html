@@ -34,51 +34,43 @@
             margin-top: 0;
         }
         /* Modal Styles */
-.modal-content {
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.modal-header {
-    background-color: #007bff;
-    color: #fff;
-    border-bottom: 1px solid #007bff;
-}
-
-.modal-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.modal-body {
-    padding: 20px;
-}
-
-.record-details {
-    white-space: pre-wrap; /* Preserve formatting */
-    font-family: Arial, sans-serif; /* Adjust font style */
-    line-height: 1.6;
-    background-color: #f8f9fa; /* Light background color */
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.modal-footer {
-    border-top: 1px solid #dee2e6;
-    background-color: #f1f1f1;
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-    border-color: #545b62;
-}
-
+        .modal-content {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .modal-header {
+            background-color: #007bff;
+            color: #fff;
+            border-bottom: 1px solid #007bff;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .modal-body {
+            padding: 20px;
+        }
+        .record-details {
+            white-space: pre-wrap; /* Preserve formatting */
+            font-family: Arial, sans-serif; /* Adjust font style */
+            line-height: 1.6;
+            background-color: #f8f9fa; /* Light background color */
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .modal-footer {
+            border-top: 1px solid #dee2e6;
+            background-color: #f1f1f1;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
     </style>
 </head>
 
@@ -89,13 +81,13 @@
             <div class="row align-items-center">
                 <div class="col-md-4 text-right">
                     <a href="patient-dashboard.html" class="nav-link">Home</a>
-                    <a href="patient-health-records.html" class="nav-link">Health Records</a>
+                    <a href="health-records.html" class="nav-link">Health Records</a>
                 </div>
                 <div class="col-md-4 text-center">
                     <h1 class="header-title">FastCare</h1>
                 </div>
                 <div class="col-md-4 text-right">
-                    <a href="patientReferral.html" class="nav-link">Previous Visits</a>
+                    <a href="visit-history.html" class="nav-link">Previous Visits</a>
                     <a href="./../login.html" class="nav-link">Logout</a>
                     <button class="btn btn-primary" id="signOutButton" style="display: none;">Sign Out</button>
                 </div>
@@ -119,24 +111,25 @@
     </div>
 
     <!-- Health Record Modal -->
-<div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="recordModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="recordModalLabel">Health Record Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="recordDetails" class="record-details"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="recordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="recordModalLabel">Health Record Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="recordDetails" class="record-details"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
     <!-- Footer -->
     <footer class="footer mt-5">
         <div class="container text-center">
@@ -228,7 +221,7 @@
                     Remarks: Regular monitoring advised. No immediate concerns.
                 `}
             ];
-    
+
             // Append health record cards to the recordList div
             records.forEach((record) => {
                 $('#recordList').append(`
@@ -239,21 +232,21 @@
                     </div>
                 `);
             });
-    
+
             // Function to render record details in the modal
             function renderRecordDetails(report) {
                 $('#recordDetails').html(`
                     <pre>${report}</pre>
                 `);
             }
-    
+
             // Show modal with record details on card click
             $('.record-card').on('click', function () {
                 const reportDetails = $(this).data('report');
                 renderRecordDetails(reportDetails);
                 $('#recordModal').modal('show');
             });
-    
+
             // Search functionality
             $('#searchInput').on('keyup', function () {
                 const searchTerm = $(this).val().toLowerCase();
@@ -264,7 +257,6 @@
             });
         });
     </script>
-    
 </body>
 
 </html>

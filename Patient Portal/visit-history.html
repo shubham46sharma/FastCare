@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastCare - Visit History</title>
+    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-right">
+                    <a href="patient-dashboard.html" class="nav-link">Home</a>
+                    <a href="health-records.html" class="nav-link">Health Records</a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h1 class="header-title">FastCare</h1>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a href="visit-history.html" class="nav-link">Previous Visits</a>
+                    <a href="./../login.html" class="nav-link">Logout</a>
+                    <button class="btn btn-primary" id="signOutButton" style="display: none;">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <h2 style="padding-bottom: 20px;">Your Visit History</h2>
+        <div id="visitList" class="row">
+            <!-- Visit cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Visit Details Modal -->
+    <div class="modal fade" id="visitModal" tabindex="-1" role="dialog" aria-labelledby="visitModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="visitModalLabel">Visit Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="visitDetails"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2024 FastCare. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Include JavaScript files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
+    <script src="auth.js" defer></script>
+    <script>
+        $(document).ready(function () {
+            // Sample visit history data
+            const visits =[
+    {
+        "id": 1,
+        "date": "2024-08-15",
+        "doctor": "Dr. John Smith",
+        "facility": "FastCare Clinic",
+        "time": "10:00 AM",
+        "details": `
+            <h5>Visit Report</h5>
+            <ul>
+                <li><strong>Doctor:</strong> Dr. John Smith</li>
+                <li><strong>Facility:</strong> FastCare Clinic</li>
+                <li><strong>Date:</strong> 2024-08-15</li>
+                <li><strong>Time:</strong> 10:00 AM</li>
+            </ul>
+            <h6>Purpose:</h6>
+            <p>Routine check-up. Discussed general health and medications.</p>
+            <h6>Notes:</h6>
+            <p>All vital signs normal. Follow-up in 6 months.</p>
+        `
+    },
+    {
+        "id": 2,
+        "date": "2024-07-30",
+        "doctor": "Dr. Emily Johnson",
+        "facility": "HealthPlus Center",
+        "time": "2:30 PM",
+        "details": `
+            <h5>Visit Report</h5>
+            <ul>
+                <li><strong>Doctor:</strong> Dr. Emily Johnson</li>
+                <li><strong>Facility:</strong> HealthPlus Center</li>
+                <li><strong>Date:</strong> 2024-07-30</li>
+                <li><strong>Time:</strong> 2:30 PM</li>
+            </ul>
+            <h6>Purpose:</h6>
+            <p>Skin allergy consultation.</p>
+            <h6>Notes:</h6>
+            <p>Prescribed antihistamines. Follow-up visit scheduled.</p>
+        `
+    },
+    {
+        "id": 3,
+        "date": "2024-06-22",
+        "doctor": "Dr. Michael Brown",
+        "facility": "Wellness Clinic",
+        "time": "9:00 AM",
+        "details": `
+            <h5>Visit Report</h5>
+            <ul>
+                <li><strong>Doctor:</strong> Dr. Michael Brown</li>
+                <li><strong>Facility:</strong> Wellness Clinic</li>
+                <li><strong>Date:</strong> 2024-06-22</li>
+                <li><strong>Time:</strong> 9:00 AM</li>
+            </ul>
+            <h6>Purpose:</h6>
+            <p>Pediatric consultation for child.</p>
+            <h6>Notes:</h6>
+            <p>Vaccinations administered. Growth and development normal.</p>
+        `
+    },
+    {
+        "id": 4,
+        "date": "2024-05-10",
+        "doctor": "Dr. Olivia Davis",
+        "facility": "Orthopedic Center",
+        "time": "1:00 PM",
+        "details": `
+            <h5>Visit Report</h5>
+            <ul>
+                <li><strong>Doctor:</strong> Dr. Olivia Davis</li>
+                <li><strong>Facility:</strong> Orthopedic Center</li>
+                <li><strong>Date:</strong> 2024-05-10</li>
+                <li><strong>Time:</strong> 1:00 PM</li>
+            </ul>
+            <h6>Purpose:</h6>
+            <p>Follow-up on orthopedic surgery.</p>
+            <h6>Notes:</h6>
+            <p>Surgical site healing well. Continue physical therapy.</p>
+        `
+    },
+    {
+        "id": 5,
+        "date": "2024-04-18",
+        "doctor": "Dr. William Wilson",
+        "facility": "NeuroCare Clinic",
+        "time": "3:00 PM",
+        "details": `
+            <h5>Visit Report</h5>
+            <ul>
+                <li><strong>Doctor:</strong> Dr. William Wilson</li>
+                <li><strong>Facility:</strong> NeuroCare Clinic</li>
+                <li><strong>Date:</strong> 2024-04-18</li>
+                <li><strong>Time:</strong> 3:00 PM</li>
+            </ul>
+            <h6>Purpose:</h6>
+            <p>Neurology consultation for migraine.</p>
+            <h6>Notes:</h6>
+            <p>New medication prescribed. Monitor symptoms.</p>
+        `
+    },
+    {
+        "id": 6,
+        "date": "2024-03-25",
+        "doctor": "Dr. Sophia Martinez",
+        "facility": "Gastro Clinic",
+        "time": "11:00 AM",
+        "details": `
+            <h5>Visit Report</h5>
+            <ul>
+                <li><strong>Doctor:</strong> Dr. Sophia Martinez</li>
+                <li><strong>Facility:</strong> Gastro Clinic</li>
+                <li><strong>Date:</strong> 2024-03-25</li>
+                <li><strong>Time:</strong> 11:00 AM</li>
+            </ul>
+            <h6>Purpose:</h6>
+            <p>Gastroenterology follow-up.</p>
+            <h6>Notes:</h6>
+            <p>Discussed diet changes. No new symptoms.</p>
+        `
+    },
+    {
+        "id": 7,
+        "date": "2024-02-14",
+        "doctor": "Dr. James Lee",
+        "facility": "EyeCare Center",
+        "time": "10:30 AM",
+        "details": `
+            <h5>Visit Report</h5>
+            <ul>
+                <li><strong>Doctor:</strong> Dr. James Lee</li>
+                <li><strong>Facility:</strong> EyeCare Center</li>
+                <li><strong>Date:</strong> 2024-02-14</li>
+                <li><strong>Time:</strong> 10:30 AM</li>
+            </ul>
+            <h6>Purpose:</h6>
+            <p>Routine eye exam.</p>
+            <h6>Notes:</h6>
+            <p>Vision slightly deteriorated. New glasses prescribed.</p>
+        `
+    },
+    {
+        "id": 8,
+        "date": "2024-01-12",
+        "doctor": "Dr. Sarah Kim",
+        "facility": "Endocrine Clinic",
+        "time": "4:00 PM",
+        "details": `
+            <h5>Visit Report</h5>
+            <ul>
+                <li><strong>Doctor:</strong> Dr. Sarah Kim</li>
+                <li><strong>Facility:</strong> Endocrine Clinic</li>
+                <li><strong>Date:</strong> 2024-01-12</li>
+                <li><strong>Time:</strong> 4:00 PM</li>
+            </ul>
+            <h6>Purpose:</h6>
+            <p>Endocrinology consultation for thyroid issues.</p>
+            <h6>Notes:</h6>
+            <p>Medication adjustment recommended. Follow-up in 3 months.</p>
+        `
+    }
+]
+
+
+            // Append visit cards to the visitList div
+            visits.forEach((visit) => {
+                $('#visitList').append(`
+                    <div class="visit-card" data-id="${visit.id}" data-details="${visit.details}">
+                        <h4>${visit.doctor}</h4>
+                        <p><strong>Date:</strong> ${visit.date}</p>
+                        <p><strong>Facility:</strong> ${visit.facility}</p>
+                        <p><strong>Time:</strong> ${visit.time}</p>
+                        <p><strong>Summary:</strong> ${visit.details.substring(17, 37)}...</p>
+                    </div>
+                `);
+            });
+
+            // Show modal with visit details on card click
+            $('.visit-card').on('click', function () {
+                const visitDetails = $(this).data('details');
+                $('#visitDetails').html(visitDetails);
+                $('#visitModal').modal('show');
+            });
+
+            // Search functionality
+            $('#searchInput').on('keyup', function () {
+                const searchTerm = $(this).val().toLowerCase();
+                $('.visit-card').each(function () {
+                    const visitText = $(this).text().toLowerCase();
+                    $(this).toggle(visitText.includes(searchTerm));
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
