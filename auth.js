@@ -24,6 +24,6 @@ document.getElementById('signOutButton').addEventListener('click', () => {
         console.log('User signed out');
         window.location.href = 'login.html'; // Redirect to login page or home page
     }).catch((error) => {
-        console.error('Sign Out Error', error);
+        console.error('Sign Out Error:', error);
     });
 });
