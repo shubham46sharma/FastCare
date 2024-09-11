@@ -1,0 +1,29 @@
+{
+  "name": "fastcare",
+  "version": "1.0.0",
+  "description": "Fastcare backend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubham46sharma/FastCare.git"
+  },
+  "keywords": [
+    "fastcare"
+  ],
+  "author": "Shubham Sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shubham46sharma/FastCare/issues"
+  },
+  "homepage": "https://github.com/shubham46sharma/FastCare#readme",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.20.0",
+    "mongoose": "^8.6.1"
+  }
+}
