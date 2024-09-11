@@ -37,5 +37,5 @@ We are actively seeking feedback and collaboration to refine and expand the Fast
 
 ## Contact
 
-For more information or to get involved, please contact us at [shubham11.cs@gmail.com](mailto:shubham11.cs@gmail.com).
+For more information or to get involved, please contact us at [shubham46sharma@gmail.com](mailto:shubham46sharma@gmail.com).
 
