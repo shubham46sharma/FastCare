@@ -8,11 +8,46 @@
     <!-- Firebase scripts with type="module" -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js" type="module"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js" type="module"></script>
+    <style>
+        /* Styling for the sample credentials box */
+        .sample-credentials {
+            background-color: rgba(255, 255, 255, 0.8); /* Light background with transparency */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .sample-credentials h5 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .sample-credentials p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* Hover effect for the sample credentials box */
+        .sample-credentials:hover {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        /* Background effect for light design */
+        body {
+            background-color: #f4f4f9;
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.3));
+        }
+    </style>
 </head>
 <body>
     <div id="header"></div>
     <div class="container">
         <div class="row justify-content-center">
+            <!-- Login Form Section -->
             <div class="col-md-6">
                 <form id="loginForm">
                     <div class="form-group">
@@ -35,8 +70,22 @@
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                     <p class="text-center">Don't have an account? <a href="signup.html">Sign up</a></p>
+                    <p class="text-center">
+                        Forgot your password? <a href="#" id="resetPasswordLink">Reset Password</a>
+                    </p>
                     <div id="error-message" class="text-danger text-center mt-3"></div>
                 </form>
+            </div>
+
+            <!-- Sample Credentials Section -->
+            
+        </div>
+        <div class="col-md-4">
+            <div class="sample-credentials">
+                <h5>Sample Login Credentials</h5>
+                <p><strong>Email:</strong> foodfathers@gmail.com</p>
+                <p><strong>Password:</strong> Fast@1234</p>
+                <p><strong>Role:</strong> Select either Doctor or Patient after logging in</p>
             </div>
         </div>
     </div>
@@ -44,7 +93,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -97,6 +146,34 @@
                             errorMessage.textContent = 'Error signing in. Please try again.';
                     }
                 });
+        });
+
+        // Reset password logic
+        document.getElementById('resetPasswordLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            if (email) {
+                sendPasswordResetEmail(auth, email)
+                    .then(() => {
+                        // Inform the user that the password reset email has been sent
+                        alert('Password reset email sent. Please check your inbox.');
+                    })
+                    .catch((error) => {
+                        const errorMessage = document.getElementById('error-message');
+                        switch (error.code) {
+                            case 'auth/invalid-email':
+                                errorMessage.textContent = 'Invalid email address.';
+                                break;
+                            case 'auth/user-not-found':
+                                errorMessage.textContent = 'No user found with this email.';
+                                break;
+                            default:
+                                errorMessage.textContent = 'Error sending reset email. Please try again.';
+                        }
+                    });
+            } else {
+                document.getElementById('error-message').textContent = 'Please enter your email to reset the password.';
+            }
         });
     </script>
 
