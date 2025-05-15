@@ -65,24 +65,25 @@ function handleSkipButtonClick() {
         location.reload();
     });
 }
-$(document).ready(function () {
-    $('#datepicker').datepicker({
-        format: 'mm/dd/yyyy',
-        autoclose: true
-    }).on('changeDate', function (e) {
-        // Handle date change
-        const selectedDate = e.format('mm/dd/yyyy');
-        $('#datepicker').val(selectedDate);
-        updateAppointmentSlots(selectedDate);
-    });
 
-    function updateAppointmentSlots(date) {
-     
-        console.log('Selected date:', date);
-       
+// Function to initialize the scheduler page elements (like datepicker)
+function initializeSchedulerPage() {
+    const datepickerElement = $('#datepicker');
+    if (datepickerElement.length && !datepickerElement.hasClass('hasDatepicker')) {
+        datepickerElement.datepicker({
+            format: 'mm/dd/yyyy',
+            autoclose: true
+        }).on('changeDate', function (e) {
+            // Handle date change
+            const selectedDate = e.format('mm/dd/yyyy');
+            datepickerElement.val(selectedDate);
+            // updateAppointmentSlots(selectedDate); // Ensure this function is defined and handles context correctly
+            console.log('Selected date:', selectedDate);
+        });
+    } else {
+        console.log("Datepicker already initialized or element not found.");
     }
-});
-
+}
 
 function fetchGetPatient() {
     const apiUrl = "https://eastus2.azure.data.mongodb-api.com/app/pac-application-sfnloyf/endpoint/GetPatient?username=john_smith";
@@ -147,17 +148,21 @@ function fillUserInfo(userInfo) {
 }
 
 
-// Initialize the page
+/* // Initialize the page -- THIS IS NOW HANDLED IN INDEX.HTML AFTER COMPONENT LOADING
 document.addEventListener('DOMContentLoaded', function () {
     populateAppointmentTable();
     //fetchGetPatient();
     fetchUserInfo();
     // Add event listener to skip button
-    document.getElementById('skipButton').addEventListener('click', handleSkipButtonClick);
+    const skipButton = document.getElementById('skipButton');
+    if (skipButton) {
+        skipButton.addEventListener('click', handleSkipButtonClick);
+    }
 
     //document.getElementById('bookAppointment').addEventListener('click', function () {
     //    fetchGetPatient();
     //});
 });
+*/
 
 
