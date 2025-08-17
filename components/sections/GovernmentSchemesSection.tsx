@@ -1,6 +1,7 @@
 import React from 'react'
 import { Shield, CheckCircle, Users, DollarSign } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import Link from 'next/link'
 
 const schemes = [
   {
@@ -95,14 +96,18 @@ export function GovernmentSchemesSection() {
               healthcare management needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg">
-                <Users className="w-5 h-5 mr-2" />
-                For Hospitals
-              </Button>
-              <Button variant="outline" size="lg">
-                <Shield className="w-5 h-5 mr-2" />
-                For Patients
-              </Button>
+              <Link href="/auth/signup">
+                <Button size="lg">
+                  <Users className="w-5 h-5 mr-2" />
+                  For Hospitals
+                </Button>
+              </Link>
+              <Link href="/auth/signup">
+                <Button variant="outline" size="lg">
+                  <Shield className="w-5 h-5 mr-2" />
+                  For Patients
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

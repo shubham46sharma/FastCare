@@ -16,17 +16,17 @@ export function CTASection() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Link href="/auth/login">
+          <Link href="/auth/signup">
             <Button size="xl" className="bg-white text-healthcare-700 hover:bg-gray-100">
               <Building2 className="w-5 h-5 mr-2" />
-              Hospital Login
+              For Hospitals
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </Link>
-          <Link href="/auth/login">
+          <Link href="/auth/signup">
             <Button size="xl" className="bg-white text-healthcare-700 hover:bg-gray-100">
               <Users className="w-5 h-5 mr-2" />
-              Patient Login
+              For Patients
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </Link>

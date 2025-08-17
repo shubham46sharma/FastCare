@@ -20,7 +20,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-healthcare-600 to-blue-700 text-white">
+      <section className="pt-32 pb-20 healthcare-hero text-white">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             About FastCare
@@ -289,7 +289,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-healthcare-600 to-blue-700 text-white">
+      <section className="py-20 healthcare-hero text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6">
             Ready to Transform Healthcare?
