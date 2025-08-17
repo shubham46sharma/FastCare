@@ -152,7 +152,7 @@ export class GovernmentSchemesManager {
    */
   getSchemesByLocation(state: string, city?: string): GovernmentScheme[] {
     return Array.from(this.schemes.values()).filter(scheme => {
-      if (scheme.locationRestrictions.length === 0) return true
+      if (!scheme.locationRestrictions || scheme.locationRestrictions.length === 0) return true
       return scheme.locationRestrictions.includes(state) || 
              (city && scheme.locationRestrictions.includes(city))
     })
@@ -164,7 +164,7 @@ export class GovernmentSchemesManager {
   getEligibleSchemes(patientData: any): GovernmentScheme[] {
     const eligibleSchemes: GovernmentScheme[] = []
 
-    for (const scheme of this.schemes.values()) {
+    for (const scheme of Array.from(this.schemes.values())) {
       if (this.isPatientEligible(patientData, scheme)) {
         eligibleSchemes.push(scheme)
       }
@@ -179,12 +179,13 @@ export class GovernmentSchemesManager {
   isPatientEligible(patientData: any, scheme: GovernmentScheme): boolean {
     // Age check
     const age = this.calculateAge(patientData.dateOfBirth)
-    if (age < scheme.minAge || age > scheme.maxAge) {
+    if ((scheme.minAge !== undefined && age < scheme.minAge) || 
+        (scheme.maxAge !== undefined && age > scheme.maxAge)) {
       return false
     }
 
     // Gender check
-    if (scheme.gender !== 'all' && patientData.gender !== scheme.gender) {
+    if (scheme.gender && scheme.gender !== 'all' && patientData.gender !== scheme.gender) {
       return false
     }
 
@@ -194,7 +195,7 @@ export class GovernmentSchemesManager {
     }
 
     // Location check
-    if (scheme.locationRestrictions.length > 0) {
+    if (scheme.locationRestrictions && scheme.locationRestrictions.length > 0) {
       const patientLocation = patientData.address?.state
       if (!patientLocation || !scheme.locationRestrictions.includes(patientLocation)) {
         return false
@@ -202,9 +203,11 @@ export class GovernmentSchemesManager {
     }
 
     // Additional eligibility criteria checks
-    for (const criteria of scheme.eligibilityCriteria) {
-      if (!this.checkEligibilityCriteria(patientData, criteria)) {
-        return false
+    if (scheme.eligibilityCriteria) {
+      for (const criteria of scheme.eligibilityCriteria) {
+        if (!this.checkEligibilityCriteria(patientData, criteria)) {
+          return false
+        }
       }
     }
 
@@ -314,7 +317,7 @@ export class GovernmentSchemesManager {
       const searchTerm = query.toLowerCase()
       results = results.filter(scheme => 
         scheme.name.toLowerCase().includes(searchTerm) ||
-        scheme.description.toLowerCase().includes(searchTerm) ||
+        (scheme.description && scheme.description.toLowerCase().includes(searchTerm)) ||
         scheme.code.toLowerCase().includes(searchTerm)
       )
     }
@@ -335,7 +338,7 @@ export class GovernmentSchemesManager {
       
       if (filters.state) {
         results = results.filter(scheme => 
-          scheme.locationRestrictions.length === 0 || 
+          !scheme.locationRestrictions || scheme.locationRestrictions.length === 0 || 
           scheme.locationRestrictions.includes(filters.state)
         )
       }

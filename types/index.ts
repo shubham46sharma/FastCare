@@ -119,13 +119,20 @@ export interface GovernmentScheme {
   name: string
   code: string
   coverageAmount: number
-  enrollmentDate: string
+  enrollmentDate?: string
   isActive: boolean
-  coverageUsed: number
-  remainingCoverage: number
+  coverageUsed?: number
+  remainingCoverage?: number
   description?: string
   eligibilityCriteria?: string[]
   coveredServices?: string[]
+  supportedProcedures?: string[]
+  launchDate?: Date
+  maxAge?: number
+  minAge?: number
+  gender?: string
+  incomeLimit?: number
+  locationRestrictions?: string[]
 }
 
 // Claim Data
@@ -142,6 +149,25 @@ export interface Claim {
   notes?: string
   documents?: string[]
   rejectionReason?: string
+}
+
+// Anomaly Detection Types
+export interface RiskFactor {
+  factor: string
+  weight: number
+  description: string
+  severity: 'low' | 'medium' | 'high' | 'critical'
+}
+
+export interface AnomalyDetection {
+  id: string
+  claimId: string
+  riskScore: number
+  riskFactors: RiskFactor[]
+  confidence: number
+  isFlagged: boolean
+  aiModel: string
+  createdAt: Date
 }
 
 // Hospital Data
