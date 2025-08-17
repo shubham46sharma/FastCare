@@ -8,6 +8,7 @@ import { HospitalDashboard } from '@/components/dashboard/HospitalDashboard'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase/config'
+import { checkOnboardingStatus } from '@/lib/hospital'
 
 export default function HospitalDashboardPage() {
   const { user, loading } = useAuth()
@@ -34,6 +35,16 @@ export default function HospitalDashboardPage() {
       if (userDoc.exists()) {
         const userData = userDoc.data()
         if (userData.userType === 'hospital') {
+          // Check if hospital has completed onboarding
+          const { needsOnboarding } = await checkOnboardingStatus(user.uid)
+          
+          if (needsOnboarding) {
+            // Hospital needs onboarding, redirect to onboarding
+            router.push('/hospital/onboarding')
+            return
+          }
+          
+          // Hospital is onboarded, allow access to dashboard
           setIsAuthorized(true)
         } else {
           // User is not a hospital, redirect to appropriate dashboard

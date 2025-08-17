@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/components/providers/AuthProvider'
 import { Button } from '@/components/ui/Button'
 import { Eye, EyeOff, Mail, Lock, Building2, User, ArrowRight, ArrowLeft } from 'lucide-react'
 import toast from 'react-hot-toast'
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -17,8 +18,35 @@ export default function LoginPage() {
   const [userType, setUserType] = useState<'hospital' | 'patient' | null>(null)
   const [showForm, setShowForm] = useState(false)
   
-  const { login, signInWithGoogle } = useAuth()
+  const { login, signInWithGoogle, user, loading } = useAuth()
   const router = useRouter()
+
+  // Handle redirect after successful login
+  useEffect(() => {
+    if (user && !loading) {
+      // User is authenticated, redirect based on user type
+      const extendedUser = user as any // Type assertion for extended user
+      if (extendedUser.userType === 'hospital') {
+        router.push('/dashboard/hospital')
+      } else if (extendedUser.userType === 'patient') {
+        router.push('/dashboard/patient')
+      }
+    }
+  }, [user, loading, router])
+
+  // Show loading state while auth is processing
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-healthcare-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+  
+
 
   const handleUserTypeSelect = (type: 'hospital' | 'patient') => {
     setUserType(type)
@@ -42,14 +70,10 @@ export default function LoginPage() {
     
     try {
       await login(email, password)
-      toast.success('Login successful!')
+      toast.success('Login successful! Redirecting...')
       
-      // Redirect to appropriate dashboard based on user type
-      if (userType === 'hospital') {
-        router.push('/dashboard/hospital')
-      } else {
-        router.push('/dashboard/patient')
-      }
+      // Don't redirect immediately - let the auth state change handle it
+      // The useAuth hook will detect the user and redirect appropriately
     } catch (error: any) {
       console.error('Login error:', error)
       
@@ -79,7 +103,8 @@ export default function LoginPage() {
     try {
       await signInWithGoogle()
       toast.success('Google sign-in successful!')
-      router.push('/dashboard')
+      // Google sign-in will trigger the auth state change
+      // The dashboard will handle the onboarding redirect
     } catch (error: any) {
       console.error('Google sign-in error:', error)
       

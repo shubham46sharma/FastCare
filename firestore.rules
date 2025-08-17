@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read/write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Allow authenticated users to read other user profiles (for hospital-patient interactions)
+    match /users/{userId} {
+      allow read: if request.auth != null;
+    }
+    
+    // Allow hospitals to access their own hospital profile
+    match /hospitals/{hospitalId} {
+      allow read, write: if request.auth != null && request.auth.uid == hospitalId;
+    }
+    
+    // Allow hospitals to access their own onboarding data
+    match /hospitalOnboarding/{hospitalId} {
+      allow read, write: if request.auth != null && request.auth.uid == hospitalId;
+    }
+    
+    // Allow hospitals to access their own sub-collections
+    match /hospitals/{hospitalId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == hospitalId;
+    }
+    
+    // Allow hospitals to access their own onboarding sub-collections
+    match /hospitalOnboarding/{hospitalId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == hospitalId;
+    }
+    
+    // Allow public read access to government schemes (for selection during onboarding)
+    match /governmentSchemes/{schemeId} {
+      allow read: if true;
+      allow write: if false; // Only admins can modify schemes
+    }
+    
+    // Allow public read access to treatments (for selection during onboarding)
+    match /treatments/{treatmentId} {
+      allow read: if true;
+      allow write: if false; // Only admins can modify treatments
+    }
+    
+    // Test collection - remove this in production
+    match /test/{document} {
+      allow read, write: if false; // Disable test collection in production
+    }
+  }
+}

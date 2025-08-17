@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import { ArrowLeft, Building2, User, Shield, Mail, Lock, Phone, MapPin, FileText, Calendar, CreditCard, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
+
 
 // Updated schema to include user type and role-specific fields
 const signupSchema = z.object({
@@ -52,6 +53,8 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false)
   const { signup } = useAuth()
   const router = useRouter()
+  
+
 
   const {
     register,
@@ -96,10 +99,12 @@ export default function SignupPage() {
       
       toast.success(`Welcome to FastCare! Your ${userType} account has been created successfully.`)
       
-      // Redirect to appropriate dashboard
+      // Redirect based on user type
       if (userType === 'hospital') {
-        router.push('/dashboard/hospital')
+        // For hospitals, go to onboarding
+        router.push('/hospital/onboarding')
       } else {
+        // For patients, go to patient dashboard
         router.push('/dashboard/patient')
       }
     } catch (error: any) {

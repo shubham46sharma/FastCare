@@ -21,6 +21,7 @@ import {
 import { useAuth } from '@/components/providers/AuthProvider'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { checkOnboardingStatus } from '@/lib/hospital'
 
 interface HospitalDashboardProps {
   user: User
@@ -70,6 +71,26 @@ export function HospitalDashboard({ user }: HospitalDashboardProps) {
   const router = useRouter()
 
   useEffect(() => {
+    // Check onboarding status and fetch dashboard data
+    const initializeDashboard = async () => {
+      try {
+        // Check if hospital has completed onboarding
+        const { needsOnboarding } = await checkOnboardingStatus(user.uid)
+        
+        if (needsOnboarding) {
+          // Hospital needs onboarding, redirect to onboarding
+          router.push('/hospital/onboarding')
+          return
+        }
+        
+        // Hospital is onboarded, fetch dashboard data
+        await fetchDashboardData()
+      } catch (error) {
+        console.error('Error initializing dashboard:', error)
+        toast.error('Failed to load dashboard data')
+      }
+    }
+
     // Simulate API calls to fetch hospital dashboard data
     const fetchDashboardData = async () => {
       try {
@@ -173,8 +194,8 @@ export function HospitalDashboard({ user }: HospitalDashboardProps) {
       }
     }
 
-    fetchDashboardData()
-  }, [])
+    initializeDashboard()
+  }, [user.uid, router])
 
   const handleLogout = async () => {
     try {

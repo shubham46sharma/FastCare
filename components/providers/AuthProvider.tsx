@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext } from 'react'
 import { User } from 'firebase/auth'
-import { useAuth as useFirebaseAuth } from '@/lib/firebase/auth'
+import { useExtendedAuth } from '@/lib/hooks/useExtendedAuth'
 
 interface AuthContextType {
   user: User | null
@@ -17,7 +17,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useFirebaseAuth()
+  const { user, loading } = useExtendedAuth()
 
   const login = async (email: string, password: string) => {
     try {
@@ -55,6 +55,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
         
         await setDoc(doc(db, 'users', userCredential.user.uid), userProfile)
+        
+        // For hospitals, also create a document in the hospitals collection
+        if (userType === 'hospital') {
+          const hospitalProfile = {
+            uid: userCredential.user.uid,
+            email: email,
+            displayName: displayName,
+            hospitalName: profileData.hospitalName,
+            licenseNumber: profileData.licenseNumber,
+            address: profileData.address,
+            phone: profileData.phone,
+            specialties: profileData.specialties || [],
+            onboarded: false, // Will be set to true after onboarding completion
+            verified: false, // Will be set to true after admin verification
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }
+          
+          await setDoc(doc(db, 'hospitals', userCredential.user.uid), hospitalProfile)
+        }
       }
     } catch (error) {
       console.error('Signup error:', error)
