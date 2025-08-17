@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/Button'
 import { useAuth } from '@/components/providers/AuthProvider'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Building2, User, Shield, Mail, Lock, Phone, MapPin, FileText, Calendar, CreditCard } from 'lucide-react'
+import { ArrowLeft, Building2, User, Shield, Mail, Lock, Phone, MapPin, FileText, Calendar, CreditCard, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 
@@ -116,333 +116,343 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-healthcare-50 to-healthcare-100 flex items-center justify-center p-4">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
         {/* Header */}
-        <div className="text-center">
+        <div className="text-center mb-8">
           <Link 
             href="/" 
-            className="inline-flex items-center text-healthcare-600 hover:text-healthcare-700 mb-4"
+            className="inline-flex items-center text-healthcare-600 hover:text-healthcare-700 mb-4 transition-colors duration-200"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Link>
-          <h2 className="text-3xl font-bold text-gray-900">Create Your Account</h2>
-          <p className="mt-2 text-sm text-gray-600">
-            Join FastCare and revolutionize healthcare together
-          </p>
+          
+          {/* Logo Area */}
+          <div className="w-16 h-16 bg-healthcare-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Building2 className="w-8 h-8 text-white" />
+          </div>
+          
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Join FastCare</h1>
+          <p className="text-gray-600">Create your account and revolutionize healthcare together</p>
         </div>
 
         {/* User Type Selection */}
         {!userType && (
           <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900 text-center">I am a...</h3>
-            
-            <Button
+            <button
               onClick={() => handleUserTypeSelect('hospital')}
-              variant="outline"
-              className="w-full h-20 flex flex-col items-center justify-center space-y-2 hover:border-healthcare-300 hover:bg-healthcare-50"
+              className="w-full p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-healthcare-300 transition-all duration-200 text-left group"
             >
-              <Building2 className="w-8 h-8 text-healthcare-600" />
-              <div>
-                <div className="font-semibold text-gray-900">Hospital/Clinic</div>
-                <div className="text-sm text-gray-500">Manage patients, claims, and referrals</div>
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-healthcare-100 rounded-lg flex items-center justify-center group-hover:bg-healthcare-200 transition-colors duration-200">
+                  <Building2 className="w-6 h-6 text-healthcare-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Hospital/Clinic</h3>
+                  <p className="text-sm text-gray-600">Manage patients, claims, and referrals with advanced tools</p>
+                </div>
+                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-healthcare-600 group-hover:translate-x-1 transition-all duration-200" />
               </div>
-            </Button>
+            </button>
 
-            <Button
+            <button
               onClick={() => handleUserTypeSelect('patient')}
-              variant="outline"
-              className="w-full h-20 flex flex-col items-center justify-center space-y-2 hover:border-healthcare-300 hover:bg-healthcare-50"
+              className="w-full p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-healthcare-300 transition-all duration-200 text-left group"
             >
-              <User className="w-8 h-8 text-healthcare-600" />
-              <div>
-                <div className="font-semibold text-gray-900">Patient</div>
-                <div className="text-sm text-gray-500">Access medical records and find care</div>
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-healthcare-100 rounded-lg flex items-center justify-center group-hover:bg-healthcare-200 transition-colors duration-200">
+                  <User className="w-6 h-6 text-healthcare-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">Patient</h3>
+                  <p className="text-sm text-gray-600">Access medical records, book appointments, and manage care</p>
+                </div>
+                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-healthcare-600 group-hover:translate-x-1 transition-all duration-200" />
               </div>
-            </Button>
+            </button>
           </div>
         )}
 
         {/* Signup Form */}
         {userType && (
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <div className="bg-white rounded-lg shadow-lg p-6 space-y-6">
+          <div className="animate-fade-in">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
               {/* User Type Display */}
-              <div className="flex items-center justify-center space-x-2 text-healthcare-600">
-                {userType === 'hospital' ? (
-                  <>
-                    <Building2 className="w-5 h-5" />
-                    <span className="font-medium">Hospital/Clinic Account</span>
-                  </>
-                ) : (
-                  <>
-                    <User className="w-5 h-5" />
-                    <span className="font-medium">Patient Account</span>
-                  </>
+              <div className="text-center mb-6">
+                <div className="flex items-center justify-center space-x-2 text-healthcare-600 mb-2">
+                  {userType === 'hospital' ? (
+                    <>
+                      <Building2 className="w-6 h-6" />
+                      <span className="text-lg font-medium">Hospital/Clinic Account</span>
+                    </>
+                  ) : (
+                    <>
+                      <User className="w-6 h-6" />
+                      <span className="text-lg font-medium">Patient Account</span>
+                    </>
+                  )}
+                </div>
+                <button
+                  onClick={() => setUserType(null)}
+                  className="text-sm text-healthcare-600 hover:text-healthcare-700 transition-colors duration-200"
+                >
+                  ← Change selection
+                </button>
+              </div>
+
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                {/* Basic Fields */}
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address *
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <input
+                        {...register('email')}
+                        type="email"
+                        className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Enter your email"
+                      />
+                    </div>
+                    {errors.email && (
+                      <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Password *
+                    </label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <input
+                        {...register('password')}
+                        type="password"
+                        className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Create a password"
+                      />
+                    </div>
+                    {errors.password && (
+                      <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Display Name *
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <input
+                        {...register('displayName')}
+                        type="text"
+                        className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Enter your display name"
+                      />
+                    </div>
+                    {errors.displayName && (
+                      <p className="mt-1 text-sm text-red-600">{errors.displayName.message}</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Role-Specific Fields */}
+                {userType === 'hospital' && (
+                  <div className="space-y-4 border-t pt-6">
+                    <h4 className="font-semibold text-gray-900 flex items-center text-lg">
+                      <Building2 className="w-5 h-5 mr-2 text-healthcare-600" />
+                      Hospital Information
+                    </h4>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Hospital/Clinic Name *
+                      </label>
+                      <input
+                        {...register('hospitalName')}
+                        type="text"
+                        className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Enter hospital name"
+                      />
+                      {errors.hospitalName && (
+                        <p className="mt-1 text-sm text-red-600">{errors.hospitalName.message}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        License Number *
+                      </label>
+                      <div className="relative">
+                        <FileText className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                          {...register('licenseNumber')}
+                          type="text"
+                          className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                          placeholder="Enter license number"
+                        />
+                      </div>
+                      {errors.licenseNumber && (
+                        <p className="mt-1 text-sm text-red-600">{errors.licenseNumber.message}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Address *
+                      </label>
+                      <div className="relative">
+                        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                          {...register('address')}
+                          type="text"
+                          className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                          placeholder="Enter hospital address"
+                        />
+                      </div>
+                      {errors.address && (
+                        <p className="mt-1 text-sm text-red-600">{errors.address.message}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number *
+                      </label>
+                      <div className="relative">
+                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                          {...register('phone')}
+                          type="tel"
+                          className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                          placeholder="Enter phone number"
+                        />
+                      </div>
+                      {errors.phone && (
+                        <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                      )}
+                    </div>
+                  </div>
                 )}
-              </div>
 
-              {/* Basic Fields */}
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <input
-                      {...register('email')}
-                      type="email"
-                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                      placeholder="Enter your email"
-                    />
-                  </div>
-                  {errors.email && (
-                    <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <input
-                      {...register('password')}
-                      type="password"
-                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                      placeholder="Create a password"
-                    />
-                  </div>
-                  {errors.password && (
-                    <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Display Name
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <input
-                      {...register('displayName')}
-                      type="text"
-                      className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                      placeholder="Enter your display name"
-                    />
-                  </div>
-                  {errors.displayName && (
-                    <p className="mt-1 text-sm text-red-600">{errors.displayName.message}</p>
-                  )}
-                </div>
-              </div>
-
-              {/* Role-Specific Fields */}
-              {userType === 'hospital' && (
-                <div className="space-y-4 border-t pt-4">
-                  <h4 className="font-medium text-gray-900 flex items-center">
-                    <Building2 className="w-4 h-4 mr-2 text-healthcare-600" />
-                    Hospital Information
-                  </h4>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Hospital/Clinic Name *
-                    </label>
-                    <input
-                      {...register('hospitalName')}
-                      type="text"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                      placeholder="Enter hospital name"
-                    />
-                    {errors.hospitalName && (
-                      <p className="mt-1 text-sm text-red-600">{errors.hospitalName.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      License Number *
-                    </label>
-                    <div className="relative">
-                      <FileText className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                {userType === 'patient' && (
+                  <div className="space-y-4 border-t pt-6">
+                    <h4 className="font-semibold text-gray-900 flex items-center text-lg">
+                      <User className="w-5 h-5 mr-2 text-healthcare-600" />
+                      Patient Information
+                    </h4>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Full Name *
+                      </label>
                       <input
-                        {...register('licenseNumber')}
+                        {...register('fullName')}
                         type="text"
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                        placeholder="Enter license number"
+                        className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Enter your full name"
                       />
+                      {errors.fullName && (
+                        <p className="mt-1 text-sm text-red-600">{errors.fullName.message}</p>
+                      )}
                     </div>
-                    {errors.licenseNumber && (
-                      <p className="mt-1 text-sm text-red-600">{errors.licenseNumber.message}</p>
-                    )}
-                  </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Address *
-                    </label>
-                    <div className="relative">
-                      <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <input
-                        {...register('address')}
-                        type="text"
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                        placeholder="Enter hospital address"
-                      />
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Date of Birth *
+                      </label>
+                      <div className="relative">
+                        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                          {...register('dateOfBirth')}
+                          type="date"
+                          className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                        />
+                      </div>
+                      {errors.dateOfBirth && (
+                        <p className="mt-1 text-sm text-red-600">{errors.dateOfBirth.message}</p>
+                      )}
                     </div>
-                    {errors.address && (
-                      <p className="mt-1 text-sm text-red-600">{errors.address.message}</p>
-                    )}
-                  </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone Number *
-                    </label>
-                    <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <input
-                        {...register('phone')}
-                        type="tel"
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                        placeholder="Enter phone number"
-                      />
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Aadhar Number *
+                      </label>
+                      <div className="relative">
+                        <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                          {...register('aadharNumber')}
+                          type="text"
+                          className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                          placeholder="Enter Aadhar number"
+                          maxLength={12}
+                        />
+                      </div>
+                      {errors.aadharNumber && (
+                        <p className="mt-1 text-sm text-red-600">{errors.aadharNumber.message}</p>
+                      )}
                     </div>
-                    {errors.phone && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
-                    )}
-                  </div>
-                </div>
-              )}
 
-              {userType === 'patient' && (
-                <div className="space-y-4 border-t pt-4">
-                  <h4 className="font-medium text-gray-900 flex items-center">
-                    <User className="w-4 h-4 mr-2 text-healthcare-600" />
-                    Patient Information
-                  </h4>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Full Name *
-                    </label>
-                    <input
-                      {...register('fullName')}
-                      type="text"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                      placeholder="Enter your full name"
-                    />
-                    {errors.fullName && (
-                      <p className="mt-1 text-sm text-red-600">{errors.fullName.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Date of Birth *
-                    </label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <input
-                        {...register('dateOfBirth')}
-                        type="date"
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                      />
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number
+                      </label>
+                      <div className="relative">
+                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                          {...register('patientPhone')}
+                          type="tel"
+                          className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                          placeholder="Enter phone number"
+                        />
+                      </div>
                     </div>
-                    {errors.dateOfBirth && (
-                      <p className="mt-1 text-sm text-red-600">{errors.dateOfBirth.message}</p>
-                    )}
-                  </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Aadhar Number *
-                    </label>
-                    <div className="relative">
-                      <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <input
-                        {...register('aadharNumber')}
-                        type="text"
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                        placeholder="Enter Aadhar number"
-                        maxLength={12}
-                      />
-                    </div>
-                    {errors.aadharNumber && (
-                      <p className="mt-1 text-sm text-red-600">{errors.aadharNumber.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Address *
-                    </label>
-                    <div className="relative">
-                      <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <input
-                        {...register('patientAddress')}
-                        type="text"
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                        placeholder="Enter your address"
-                      />
-                    </div>
-                    {errors.patientAddress && (
-                      <p className="mt-1 text-sm text-red-600">{errors.patientAddress.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone Number
-                    </label>
-                    <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <input
-                        {...register('patientPhone')}
-                        type="tel"
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                        placeholder="Enter phone number"
-                      />
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Address *
+                      </label>
+                      <div className="relative">
+                        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                          {...register('patientAddress')}
+                          type="text"
+                          className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent transition-all duration-200"
+                          placeholder="Enter your address"
+                        />
+                      </div>
+                      {errors.patientAddress && (
+                        <p className="mt-1 text-sm text-red-600">{errors.patientAddress.message}</p>
+                      )}
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Creating Account...' : 'Create Account'}
-              </Button>
-
-              {/* Back Button */}
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full"
-                onClick={() => setUserType(null)}
-              >
-                Back to Selection
-              </Button>
+                {/* Submit Button */}
+                <Button
+                  type="submit"
+                  className="w-full py-3 bg-healthcare-600 hover:bg-healthcare-700 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-md"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Creating Account...' : 'Create Account'}
+                </Button>
+              </form>
             </div>
-          </form>
-        )}
 
-        {/* Login Link */}
-        <div className="text-center">
-          <p className="text-sm text-gray-600">
-            Already have an account?{' '}
-            <Link href="/auth/login" className="font-medium text-healthcare-600 hover:text-healthcare-500">
-              Sign in here
-            </Link>
-          </p>
-        </div>
+            {/* Login Link */}
+            <div className="mt-6 text-center">
+              <p className="text-gray-600">
+                Already have an account?{' '}
+                <Link href="/auth/login" className="font-semibold text-healthcare-600 hover:text-healthcare-700 transition-colors duration-200">
+                  Sign in here
+                </Link>
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

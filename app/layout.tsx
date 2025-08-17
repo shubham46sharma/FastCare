@@ -4,6 +4,7 @@ import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from '@/components/providers/AuthProvider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import NavigationWrapper from '@/components/ui/NavigationWrapper'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -42,6 +43,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider>
           <AuthProvider>
+            <NavigationWrapper />
             {children}
             <Toaster 
               position="top-right"

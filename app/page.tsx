@@ -14,19 +14,29 @@ export default function HomePage() {
       <HeroSection />
       
       {/* Features Section */}
-      <FeaturesSection />
+      <section id="features">
+        <FeaturesSection />
+      </section>
       
       {/* Government Schemes Section */}
-      <GovernmentSchemesSection />
+      <section id="government-schemes">
+        <GovernmentSchemesSection />
+      </section>
       
       {/* How It Works Section */}
-      <HowItWorksSection />
+      <section id="how-it-works">
+        <HowItWorksSection />
+      </section>
       
       {/* Testimonials Section */}
-      <TestimonialsSection />
+      <section id="testimonials">
+        <TestimonialsSection />
+      </section>
       
       {/* CTA Section */}
-      <CTASection />
+      <section id="cta">
+        <CTASection />
+      </section>
     </div>
   )
 }
