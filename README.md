@@ -10,7 +10,7 @@
 
 ## 🌐 **Live Demo**
 
-**Access the platform:** [https://fast-care-f5gw0viqx-shubham-sharmas-projects-6653d4da.vercel.app/](https://fast-care-f5gw0viqx-shubham-sharmas-projects-6653d4da.vercel.app/)
+**Access the platform:** https://fast-care-seven.vercel.app/
 
 ---
 
