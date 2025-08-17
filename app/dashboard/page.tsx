@@ -12,6 +12,7 @@ export default function DashboardPage() {
   const router = useRouter()
   const [userType, setUserType] = useState<'hospital' | 'patient' | null>(null)
   const [isLoadingProfile, setIsLoadingProfile] = useState(true)
+  const [shouldRedirect, setShouldRedirect] = useState(false)
 
   useEffect(() => {
     if (!loading && !user) {
@@ -23,6 +24,18 @@ export default function DashboardPage() {
       fetchUserProfile()
     }
   }, [user, loading, userType, router])
+
+  // Handle redirects after user type is determined
+  useEffect(() => {
+    if (userType && !shouldRedirect) {
+      setShouldRedirect(true)
+      if (userType === 'hospital') {
+        router.push('/dashboard/hospital')
+      } else if (userType === 'patient') {
+        router.push('/dashboard/patient')
+      }
+    }
+  }, [userType, shouldRedirect, router])
 
   const fetchUserProfile = async () => {
     if (!user) return
@@ -69,12 +82,25 @@ export default function DashboardPage() {
     )
   }
 
-  // Redirect to role-specific dashboard
-  if (userType === 'hospital') {
-    router.push('/dashboard/hospital')
-    return null
-  } else {
-    router.push('/dashboard/patient')
-    return null
+  // Show loading while redirecting
+  if (shouldRedirect) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <LoadingSpinner size="large" />
+          <p className="mt-4 text-gray-600">Redirecting to your dashboard...</p>
+        </div>
+      </div>
+    )
   }
+
+  // This should never be reached, but just in case
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <LoadingSpinner size="large" />
+        <p className="mt-4 text-gray-600">Preparing your dashboard...</p>
+      </div>
+    </div>
+  )
 }
