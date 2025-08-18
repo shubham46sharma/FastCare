@@ -15,9 +15,10 @@ export function useOnboardingRedirect() {
     // Only run this hook if user is authenticated
     if (user) {
       // Check if user is a hospital
-      if (user.userType === 'hospital') {
+      const extendedUser = user as any // Type assertion for extended user
+      if (extendedUser.userType === 'hospital') {
         checkHospitalOnboarding()
-      } else if (user.userType === 'patient') {
+      } else if (extendedUser.userType === 'patient') {
         // Patient users go to patient dashboard
         router.push('/dashboard/patient')
       }
@@ -26,6 +27,8 @@ export function useOnboardingRedirect() {
   }, [user, loading, router])
 
   const checkHospitalOnboarding = async () => {
+    if (!user) return // Early return if user is null
+    
     try {
       const { needsOnboarding, currentStep } = await checkOnboardingStatus(user.uid)
       

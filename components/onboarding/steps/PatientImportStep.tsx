@@ -29,11 +29,11 @@ export function PatientImportStep({
   const [formData, setFormData] = useState<Partial<PatientImport>>({
     name: '',
     age: 0,
-    gender: '',
+    gender: undefined,
     phone: '',
     schemeEnrolled: '',
     diagnosis: '',
-    notes: ''
+    address: ''
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -77,11 +77,11 @@ export function PatientImportStep({
     setFormData({
       name: '',
       age: 0,
-      gender: '',
+      gender: undefined,
       phone: '',
       schemeEnrolled: '',
       diagnosis: '',
-      notes: ''
+      address: ''
     })
     setErrors({})
     setEditingPatientId(null)
@@ -120,7 +120,7 @@ export function PatientImportStep({
       // Add new patient
       const newPatient: PatientImport = {
         id: `patient_${Date.now()}`,
-        ...formData as PatientImport
+        ...formData as Omit<PatientImport, 'id'>
       }
       setPatients(prev => [...prev, newPatient])
     }
@@ -142,11 +142,12 @@ export function PatientImportStep({
       id: `patient_${Date.now()}`,
       name: `Imported from ${file.name}`,
       age: 0,
-      gender: 'Unknown',
+      gender: 'other',
       phone: '',
+      aadharNumber: 'To be updated',
       schemeEnrolled: 'Unknown',
       diagnosis: 'To be updated',
-      notes: `Imported from ${file.name}`
+      address: `Imported from ${file.name}`
     }
     setPatients(prev => [...prev, newPatient])
   }
@@ -159,11 +160,12 @@ export function PatientImportStep({
       id: `patient_${Date.now()}`,
       name: `Imported from ${file.name}`,
       age: 0,
-      gender: 'Unknown',
+      gender: 'other',
       phone: '',
+      aadharNumber: 'To be updated',
       schemeEnrolled: 'Unknown',
       diagnosis: 'To be updated',
-      notes: `Imported from ${file.name}`
+      address: `Imported from ${file.name}`
     }
     setPatients(prev => [...prev, newPatient])
   }
@@ -333,9 +335,9 @@ export function PatientImportStep({
                         </div>
                       )}
                     </div>
-                    {patient.notes && (
+                    {patient.address && (
                       <div className="mt-2 text-sm text-gray-600">
-                        <span className="font-medium">Notes:</span> {patient.notes}
+                        <span className="font-medium">Address:</span> {patient.address}
                       </div>
                     )}
                   </div>
@@ -498,16 +500,16 @@ export function PatientImportStep({
             </div>
 
             <div>
-              <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-2">
-                Additional Notes
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
+                Address
               </label>
               <textarea
-                id="notes"
+                id="address"
                 rows={3}
-                value={formData.notes || ''}
-                onChange={(e) => handleInputChange('notes', e.target.value)}
+                value={formData.address || ''}
+                onChange={(e) => handleInputChange('address', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-healthcare-500 focus:border-transparent"
-                placeholder="Enter any additional notes about the patient"
+                placeholder="Enter patient address"
               />
             </div>
 

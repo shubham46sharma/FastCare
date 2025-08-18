@@ -43,7 +43,7 @@ export default function HospitalOnboardingPage() {
       return
     }
 
-    if (user && user.userType !== 'hospital') {
+    if (user && (user as any).userType !== 'hospital') {
       router.push('/dashboard')
       return
     }
@@ -90,7 +90,7 @@ export default function HospitalOnboardingPage() {
         // Migrate old data structure to new structure
         const migratedData: OnboardingData = {
           hospitalProfile: existingData.hospitalProfile || {},
-          schemes: existingData.schemes || existingData.governmentSchemes || [],
+          schemes: existingData.schemes || (existingData as any).governmentSchemes || [],
           doctors: existingData.doctors || [],
           treatments: existingData.treatments || [],
           patients: existingData.patients || [],
@@ -110,7 +110,7 @@ export default function HospitalOnboardingPage() {
         if (migratedData.doctors.length > 0) completed.push(3)
         if (migratedData.treatments.length > 0) completed.push(4)
         if (migratedData.patients.length > 0) completed.push(5)
-        if (migratedData.currentStep === 6 || existingData.isCompleted) completed.push(6)
+        if (migratedData.currentStep === 6 || (existingData as any).isCompleted) completed.push(6)
         
         setCompletedSteps(completed)
         

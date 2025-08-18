@@ -24,9 +24,10 @@ export default function OnboardingLayout({
     }
 
     // Check if user is a hospital
-    if (user.userType !== 'hospital') {
+    const extendedUser = user as any // Type assertion for extended user
+    if (extendedUser.userType !== 'hospital') {
       // User is not a hospital, redirect to appropriate dashboard
-      router.push(`/dashboard/${user.userType || 'patient'}`)
+      router.push(`/dashboard/${extendedUser.userType || 'patient'}`)
       return
     }
 

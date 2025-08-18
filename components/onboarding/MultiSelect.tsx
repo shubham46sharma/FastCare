@@ -12,10 +12,10 @@ interface Option {
   isCustom?: boolean
 }
 
-interface MultiSelectProps {
-  options: Option[]
-  selectedOptions: Option[]
-  onSelectionChange: (options: Option[]) => void
+interface MultiSelectProps<T extends Option = Option> {
+  options: T[]
+  selectedOptions: T[]
+  onSelectionChange: (options: T[]) => void
   placeholder?: string
   searchPlaceholder?: string
   allowCustom?: boolean
@@ -24,7 +24,7 @@ interface MultiSelectProps {
   disabled?: boolean
 }
 
-export function MultiSelect({
+export function MultiSelect<T extends Option = Option>({
   options,
   selectedOptions,
   onSelectionChange,
@@ -34,7 +34,7 @@ export function MultiSelect({
   onAddCustom,
   maxSelections,
   disabled = false
-}: MultiSelectProps) {
+}: MultiSelectProps<T>) {
   const [isOpen, setIsOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [customValue, setCustomValue] = useState('')
@@ -60,10 +60,10 @@ export function MultiSelect({
     (option.code && option.code.toLowerCase().includes(searchTerm.toLowerCase()))
   )
 
-  const isOptionSelected = (option: Option) => 
+  const isOptionSelected = (option: T) => 
     selectedOptions.some(selected => selected.id === option.id)
 
-  const toggleOption = (option: Option) => {
+  const toggleOption = (option: T) => {
     if (isOptionSelected(option)) {
       onSelectionChange(selectedOptions.filter(selected => selected.id !== option.id))
     } else {

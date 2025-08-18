@@ -118,7 +118,7 @@ export function DoctorsStep({
       // Add new doctor
       const newDoctor: Doctor = {
         id: `doctor_${Date.now()}`,
-        ...formData as Doctor
+        ...formData as Omit<Doctor, 'id'>
       }
       setDoctors(prev => [...prev, newDoctor])
     }

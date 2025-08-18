@@ -16,7 +16,7 @@ interface VerificationDocument {
   type: 'registration' | 'license' | 'certification' | 'other'
   file: File
   uploadedAt: Date
-  status: 'pending' | 'uploaded' | 'error'
+  status: 'pending' | 'uploading' | 'uploaded' | 'error'
 }
 
 export function VerificationStep({ 

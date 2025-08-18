@@ -19,9 +19,10 @@ export default function DashboardPage() {
     }
 
     // Redirect based on user type
-    if (user.userType === 'hospital') {
+    const extendedUser = user as any // Type assertion for extended user
+    if (extendedUser.userType === 'hospital') {
       router.push('/dashboard/hospital')
-    } else if (user.userType === 'patient') {
+    } else if (extendedUser.userType === 'patient') {
       router.push('/dashboard/patient')
     } else {
       // Unknown user type, redirect to login
